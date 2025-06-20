@@ -10,5 +10,6 @@ COPY --from=build src/target/housemate.jar /run/housemate.jar
 
 EXPOSE 8888
 
+ENV PORT=8888
 ENV JAVA_OPTIONS="-Xmx2048m -Xms256m"
 ENTRYPOINT java -jar $JAVA_OPTIONS /run/housemate.jar
