@@ -870,34 +870,39 @@ public class TaskBuildupService {
     @Bean
     public void AutoScanScheduleForNewTask() {
         TaskBuildupService taskBuidServ = this;
-        String cronExp = TIME_TRIGGER_SCAN_NEW_TASK.getString();
+        String cronExp;
+
+        try {
+            cronExp = TIME_TRIGGER_SCAN_NEW_TASK.getString();
+            if (cronExp == null || cronExp.trim().isEmpty()) {
+                throw new IllegalArgumentException("Cron expression must not be empty");
+            }
+        } catch (Exception e) {
+            log.error("Failed to start AutoScanScheduleForNewTask: {}", e.getMessage(), e);
+            return; // Không throw để tránh làm crash toàn hệ thống
+        }
+
         CronTrigger cronTrigger = new CronTrigger(cronExp);
-        Trigger trigger = new Trigger() {
-            @Override
-            public Instant nextExecution(TriggerContext triggerContext) {
-                return cronTrigger.nextExecution(triggerContext);
-            }
-        };
+        Trigger trigger = triggerContext -> cronTrigger.nextExecution(triggerContext);
 
-        Runnable eventAutoScanScheduleForNewTask = new Runnable() {
+        Runnable eventAutoScanScheduleForNewTask = () -> {
+            String newCron = TIME_TRIGGER_SCAN_NEW_TASK.getString();
+            log.info("cronTrigger get expression {} - and current cron Expression {} - and Equal {}",
+                    newCron, cronExpression, newCron.equals(cronExpression));
 
-            public void run() {
-                log.info("cronTrigger get expression {} - and current cron Expression {} - and Equal {}",
-                        TIME_TRIGGER_SCAN_NEW_TASK.getString(), cronExpression,
-                        TIME_TRIGGER_SCAN_NEW_TASK.getString().equals(cronExpression));
-                if (cronExpression != null) {
-                    if (!TIME_TRIGGER_SCAN_NEW_TASK.getString().equals(cronExpression)) {
-                        taskBuidServ.cancelAutoScanSchduleForNewTask();
-                        synchronized (this) {
-                            cronExpression = cronTrigger.getExpression();
-                        }
-                        taskBuidServ.AutoScanScheduleForNewTask();
-                    }
+            if (cronExpression != null && !newCron.equals(cronExpression)) {
+                taskBuidServ.cancelAutoScanSchduleForNewTask();
+                synchronized (this) {
+                    cronExpression = newCron;
                 }
-                cronExpression = cronTrigger.getExpression();
-                taskBuidServ.createTasksOnUpcomingSchedulesAutoByFixedRate();
+                taskBuidServ.AutoScanScheduleForNewTask();
+                return;
             }
+
+            cronExpression = newCron;
+            taskBuidServ.createTasksOnUpcomingSchedulesAutoByFixedRate();
         };
+
         scheduleEventAutoScanForNewTask = taskScheduler.schedule(eventAutoScanScheduleForNewTask, trigger);
         log.info("Create auto scan schedule for new task at {}", dateFormat.format(new Date()));
     }
