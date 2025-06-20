@@ -52,7 +52,7 @@ maven run
 ## 3. Infomation
 
 ```
-Port: 8080
+Port: 8888
 Java 17
 Netbean 19
 SpringBoot 3.1.3

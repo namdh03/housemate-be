@@ -19,9 +19,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         ),
         servers = {
             @Server(url = "http://localhost:8080"),
+            @Server(url = "http://localhost:8888"),
             @Server(url = "https://housemateb.thanhf.dev"),
             @Server(url = "https://housemateb2.thanhf.dev"),
-            @Server(url = "https://housemateb3.thanhf.dev")
+            @Server(url = "https://housemateb3.thanhf.dev"),
+            @Server(url = "https://housemate-api.namdh03.site"),
         }
 )
 public class HouseMateApplication {
