@@ -10,7 +10,7 @@ env:
   DOCKER_PLATFORM: linux/amd64
 
   APP_INTERNAL_PORT: ${{ secrets.APP_INTERNAL_PORT || '8080' }}
-  APP_EXTERNAL_PORT: ${{ secrets.APP_EXTERNAL_PORT || '8080' }}
+  APP_EXTERNAL_PORT: ${{ secrets.APP_EXTERNAL_PORT_DEV || secrets.APP_PORT || '8080' }}
 
   DEPLOY_HOST: ${{ secrets.HOST_PRODUCTION }}
   DEPLOY_USERNAME: ${{ secrets.USERNAME_PRODUCTION }}
