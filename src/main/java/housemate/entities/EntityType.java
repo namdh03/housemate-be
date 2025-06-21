@@ -11,7 +11,7 @@ import jakarta.persistence.*;
  * @author ThanhF
  */
 @Entity
-@Table(name = "Entity_Type")
+@Table(name = "entity_type")
 public class EntityType {
 
     @Id

@@ -12,7 +12,7 @@ import java.util.Date;
  * @author ThanhF
  */
 @Entity
-@Table(name = "Payment_Transaction")
+@Table(name = "payment_transaction")
 public class PaymentTransaction {
 
     @Id

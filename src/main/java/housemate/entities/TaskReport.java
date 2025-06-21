@@ -17,7 +17,7 @@ import housemate.constants.Enum.TaskStatus;
  * @author ThanhF
  */
 @Entity
-@Table(name = "Task_Report")
+@Table(name = "task_report")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

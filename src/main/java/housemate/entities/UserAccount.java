@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * @author ThanhF
  */
 @Entity
-@Table(name = "UserAccount")
+@Table(name = "user_account")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
