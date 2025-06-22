@@ -105,6 +105,11 @@ public class AuthService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email have been created before");
         }
 
+         UserAccount accountByPhone = userRepository.findByPhoneNumber(registerAccountDTO.getPhoneNumber());
+        if (accountByPhone != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This phone number has been registered before");
+        }
+
         // Insert to database
         String hash = bcryptUtil.hashPassword(registerAccountDTO.getPassword());
         registerAccountDTO.setPassword(hash);

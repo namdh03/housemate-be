@@ -49,4 +49,6 @@ public interface UserRepository extends JpaRepository<UserAccount, Integer> {
     UserAccount findByAddress(String address);
 
     UserAccount findByIdentityCard(String identityCard);
+    
+    UserAccount findByPhoneNumber(String phoneNumber);
 }
