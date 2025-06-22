@@ -30,7 +30,7 @@ import java.util.List;
 public class AccountService {
 
     private static final String MONTH_YEAR_FORMAT = "yyyy/MM";
-    private static final String DEFAULT_STAFF_PASSWORD = "Password123";
+    private static final String DEFAULT_STAFF_PASSWORD = "Password123@";
 
     @Autowired
     UserRepository userRepository;
