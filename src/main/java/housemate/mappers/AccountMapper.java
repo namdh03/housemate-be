@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Component
 public class AccountMapper {
 
-    final String DEFAULT_AVATAR = "housemate-api.namdh03.site/images/panda.png";
+    final String DEFAULT_AVATAR = "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg";
     final int MAX_PROFICIENCY_SCORE = 100;
     final int DEFAULT_RATING = 0;
 
