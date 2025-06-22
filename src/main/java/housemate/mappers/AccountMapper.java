@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Component
 public class AccountMapper {
 
-    final String DEFAULT_AVATAR = "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg";
+    final String DEFAULT_AVATAR = "https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436189.jpg";
     final int MAX_PROFICIENCY_SCORE = 100;
     final int DEFAULT_RATING = 0;
 
