@@ -2,6 +2,7 @@ package housemate.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -154,19 +155,20 @@ public class TheService {
 		
 		List<ServiceViewDTO> serviceViewList = new ArrayList<>();
 		for (Service service : serviceList.getContent()) {
-			ServiceViewDTO serviceView = new  ServiceViewDTO();
-			//set service to view
-			serviceView.setService(service);
-			List<ServicePrice> priceList = new ArrayList<>();
-			ServicePrice servicePrice = new ServicePrice();
-			List<Period> periodServiceList = periodRepo.findAllByServiceId(service.getServiceId());
-			periodServiceList.forEach(s -> priceList.add(mapper.map(s, ServicePrice.class)));
-			serviceView.setPriceList(priceList);
-			serviceViewList.add(serviceView);
+				ServiceViewDTO serviceView = new ServiceViewDTO();
+				//set service to view
+				serviceView.setService(service);
+				List<ServicePrice> priceList = new ArrayList<>();
+				List<Period> periodServiceList = periodRepo.findAllByServiceId(service.getServiceId());
+				periodServiceList.forEach(s -> priceList.add(mapper.map(s, ServicePrice.class)));
+				// Sort priceList by periodValue (month) in ascending order
+				Collections.sort(priceList, Comparator.comparing(ServicePrice::getPeriodValue));
+				serviceView.setPriceList(priceList);
+				serviceViewList.add(serviceView);
 		}
 		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 		Page<ServiceViewDTO> serviceViewPage = new PageImpl<ServiceViewDTO>(serviceViewList, serviceList.getPageable(), serviceList.getTotalElements());
-				
+
 		return ResponseEntity.ok(serviceViewPage);
 	}
 
